@@ -1,0 +1,190 @@
+.container {
+  padding: 40px 20px;
+}
+
+.addContainer {
+  display: none;
+}
+
+.dateContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.calendarIcon {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  color: rgba(155, 159, 170, 1);
+}
+
+.calendarIcon:hover,
+.calendarIcon:focus {
+  color: rgba(252, 132, 45, 1);
+}
+
+.datePicker {
+  display: none;
+}
+
+.currentDate {
+  color: #212121;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.item span {
+  flex-shrink: 0;
+  color: #212121;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.56px;
+  border-bottom: 0.5px solid #e0e0e0;
+  padding: 8px 0 8px 0;
+}
+
+.sub {
+  font-size: 11px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  width: 130px;
+}
+
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0;
+}
+
+.noProductsMessage {
+  color: #ff6347;
+  font-style: italic;
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+.deleteButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  width: 9.826px;
+  height: 10px;
+  color: #9b9faa;
+}
+
+.xIcon {
+  width: 9.826px;
+  height: 10px;
+}
+
+.icon {
+  width: 23.04px;
+  height: 23.04px;
+  color: rgba(255, 255, 255, 1);
+}
+
+.addButton {
+  height: 48px;
+  padding: 12.5px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+@media (width>=768px) {
+  .container {
+    padding: 100px 126px 55px 32px;
+  }
+
+  .list {
+    height: 244px;
+    overflow-y: scroll;
+  }
+
+  .consumedProductsList {
+    margin-top: 60px;
+  }
+
+  .addButton {
+    display: none;
+  }
+
+  .name {
+    width: 240px;
+  }
+
+  .calories,
+  .weight {
+    width: 106px;
+    text-align: right;
+  }
+
+  .item span {
+    padding: 20px 0 20px 0;
+  }
+
+  .item {
+    justify-content: space-around;
+  }
+
+  .xIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .addContainer {
+    display: flex;
+  }
+
+  .currentDate {
+    font-size: 34px;
+  }
+}
+
+@media (width>=1280px) {
+  .container {
+    max-width: 45%;
+  }
+}
+
+/* 
+Modal
+*/
+
+.modalButtons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 60px;
+}
+
+.modalText {
+  text-align: center;
+  color: #212121;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.cancelButton {
+  background-color: transparent;
+  color: #fc842d;
+  border: 1px solid #fc842d;
+}
+
+.cancelButton:hover,
+.cancelButton:focus {
+  background-color: #fc842d;
+  color: #fff;
+}

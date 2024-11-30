@@ -1,0 +1,75 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+}
+
+.inputContainer {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.label {
+  position: absolute;
+  top: 14px;
+  left: 10px;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  color: #9b9faa;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.56px;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  padding-top: 20px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 4px;
+  outline: none;
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #333;
+}
+
+.focused {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #e0e0e0;
+}
+
+.radioGroup {
+  display: flex;
+  justify-content: space-around;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.radioLabel input {
+  margin-right: 5px;
+}
+
+.submitButton {
+  padding: 10px 20px;
+  background-color: orange;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}

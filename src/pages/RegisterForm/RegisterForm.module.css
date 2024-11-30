@@ -1,0 +1,115 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 55px;
+}
+
+.title {
+  color: #fc842d;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 700;
+
+  letter-spacing: 0.56px;
+  text-transform: uppercase;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  justify-content: center;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.label {
+  color: #9b9faa;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.56px;
+
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  transition: 0.3s ease all;
+  pointer-events: none;
+}
+
+.input {
+  width: 100%;
+  /* max-width: 240px; */
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 4px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #212121; /* Albastru pentru focus */
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+  top: -10px;
+  left: 10px;
+  font-size: 12px;
+  color: #212121; /* Albastru pentru etichetă la focus */
+}
+
+.input::placeholder {
+  color: transparent; /* Ascundem placeholder-ul */
+}
+
+.input:focus::placeholder {
+  color: transparent;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.transparentButton {
+  background-color: transparent;
+  border: 2px solid #fc842d;
+  color: #fc842d;
+  width: 182px;
+}
+.button {
+  width: 182px;
+}
+
+.transparentButton:hover,
+.transparentButton:focus {
+  background-color: #fc842d;
+  color: #fff;
+  border: none;
+}
+
+@media (width >= 768px) {
+  .container {
+    max-width: 500px;
+  }
+
+  .title {
+    text-align: start;
+  }
+
+  .buttons {
+    flex-direction: row;
+  }
+
+  .inputContainer {
+    max-width: 240px;
+  }
+}

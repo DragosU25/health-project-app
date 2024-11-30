@@ -1,0 +1,23 @@
+import logo from "../assets/images/logo.png";
+import logoText1 from "../assets/images/logoText1.svg";
+import logoText2 from "../assets/images/logoText2.svg";
+import backgroundForm from "../assets/images/backgroundForm.svg";
+import VectorSvg from "../assets/images/Vector 1.svg";
+import mobileCloseSvg from "../assets/images/mobileClose.svg";
+import goodFruitsDesktop from "../assets/images/good fruits desktop.png";
+import goodFruitsTablet from "../assets/images/good fruits tablet.png";
+import goodFrunzeSidebarTablet from "../assets/images/good frunze sidebar tableta.png";
+import goodFrunzeSidebarDesktop from "../assets/images/good frunze verticale sidebar desktop.png";
+import goodVector from "../assets/images/good vectorgri.png";
+
+export const logoImg = logo;
+export const logoTextImg1 = logoText1;
+export const logoTextImg2 = logoText2;
+export const background = backgroundForm;
+export const vector = VectorSvg;
+export const mobileClose = mobileCloseSvg;
+export const backgroundFruitsDektop = goodFruitsDesktop;
+export const backgroundFruitsTablet = goodFruitsTablet;
+export const backgroundLeafDesktop = goodFrunzeSidebarDesktop;
+export const backgroundLeafTablet = goodFrunzeSidebarTablet;
+export const vectorBackground = goodVector;
