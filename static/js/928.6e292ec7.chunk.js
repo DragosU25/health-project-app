@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkhealth_project_app=self.webpackChunkhealth_project_app||[]).push([[928],{5928:(e,p,t)=>{t.r(p),t.d(p,{default:()=>h});t(5043);var a=t(579);const h=()=>(0,a.jsx)("div",{children:"NotFound"})}}]);
+//# sourceMappingURL=928.6e292ec7.chunk.js.map
