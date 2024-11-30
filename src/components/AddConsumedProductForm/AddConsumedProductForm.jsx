@@ -18,7 +18,6 @@ const AddConsumedProductForm = ({ onClose, extraClass = "" }) => {
   const [productName, setProductName] = useState("");
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [weight, setWeight] = useState(0);
-  const [calories, setCalories] = useState(0);
   const [showSelect, setShowSelect] = useState(true);
 
   // Get all products from the Redux store
@@ -45,7 +44,6 @@ const AddConsumedProductForm = ({ onClose, extraClass = "" }) => {
     );
     setSelectedProduct(product);
     setProductName(product.title);
-    setCalories((product.calories / 100) * weight); // Set the calories of the selected product
     setShowSelect(false); // Hide the select dropdown
   };
 
@@ -60,7 +58,6 @@ const AddConsumedProductForm = ({ onClose, extraClass = "" }) => {
     const newWeight = e.target.value;
     setWeight(newWeight);
     if (selectedProduct) {
-      setCalories((selectedProduct.calories / 100) * newWeight); // Recalculate calories based on new weight
     }
   };
 
@@ -88,11 +85,10 @@ const AddConsumedProductForm = ({ onClose, extraClass = "" }) => {
       .then(() => {
         Notiflix.Notify.success("Product added successfully.");
 
-        // Reset the form fields after submission
         setProductName("");
         setSelectedProduct(null);
         setWeight(0);
-        setCalories(0);
+
         dispatch(getCurrentUser());
 
         // Close the modal after submission
