@@ -5,4 +5,3 @@ export const selectAuthLoading = (state) => state.auth.loading;
 export const selectAuthError = (state) => state.auth.error;
 export const selectToken = (state) => state.auth.token;
 export const selectUserName = (state) => state.auth.user.user;
-export const selectUserCurrent = (state) => state.user.user;

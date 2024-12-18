@@ -124,12 +124,15 @@ const productSlice = createSlice({
       .addCase(deleteConsumedProductForUser.rejected, setError)
 
       // getConsumedInfoForSpecificDay
-      .addCase(getConsumedInfoForSpecificDay.pending, setLoading)
+      .addCase(getConsumedInfoForSpecificDay.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(getConsumedInfoForSpecificDay.fulfilled, (state, action) => {
         state.loading = false;
 
         // Asigură-te că setăm produsele consumate
-        const consumedProducts = action.payload.consumedProducts.map(
+        const consumedProducts = (action.payload.consumedProducts || []).map(
           (product) => ({
             ...product,
             calories: product.calories || 0, // Asigură-te că fiecare produs are calorii setate
@@ -149,7 +152,10 @@ const productSlice = createSlice({
             action.payload.userDiary.percentageCaloriesConsumed;
         }
       })
-      .addCase(getConsumedInfoForSpecificDay.rejected, setError);
+      .addCase(getConsumedInfoForSpecificDay.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Something went wrong";
+      });
   },
 });
 

@@ -4,46 +4,41 @@ import { selectUser } from "../../redux/auth/selectorsAuth";
 import {
   getConsumedInfoForSpecificDay,
   deleteConsumedProductForUser,
-} from "../../redux/products/productOperations"; // pentru a obține produsele pe o dată specifică
+} from "../../redux/products/productOperations";
 import Modal from "../common/Modal/Modal";
 import AddConsumedProductForm from "../AddConsumedProductForm/AddConsumedProductForm";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FaCalendarAlt } from "react-icons/fa";
-import { HiPlus, HiX } from "react-icons/hi"; // Importăm icon-ul de calendar
-import styles from "./ProductsList.module.css"; // CSS
+import { HiPlus, HiX } from "react-icons/hi";
+import styles from "./ProductsList.module.css";
 import Button from "../common/Button/Button";
-import Notiflix from "notiflix"; // Importăm Notiflix pentru notificări
+import Notiflix from "notiflix";
 import { getCurrentUser } from "../../redux/auth/authOperations";
 
-const ProductsList = () => {
+const ProductsList = ({ selectedDate, handleChange }) => {
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Data selectată
-  const [productToDelete, setProductToDelete] = useState(null); // Produsul selectat pentru ștergere
+  const [productToDelete, setProductToDelete] = useState(null);
   const currentUser = useSelector(selectUser);
   const dispatch = useDispatch();
-  const datePickerRef = useRef(null); // Creăm un ref pentru DatePicker
-  const consumedProducts = currentUser.consumedProducts; // Produse consumate din Redux
+  const datePickerRef = useRef(null);
+  const consumedProducts = currentUser?.consumedProducts || [];
 
   useEffect(() => {
-    const formattedDate = selectedDate.toISOString().split("T")[0];
-    dispatch(getConsumedInfoForSpecificDay(formattedDate));
-  }, [dispatch, selectedDate]);
+    const fetchData = async () => {
+      const formattedDate = selectedDate.toISOString().split("T")[0];
+      if (selectedDate) {
+        await dispatch(getConsumedInfoForSpecificDay(formattedDate));
+      }
+    };
+    fetchData();
+  }, [selectedDate, dispatch]);
 
-  // Funcție pentru a filtra produsele pe baza datei selectate
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-    const formattedDate = date.toISOString().split("T")[0]; // formatăm data în "yyyy-MM-dd"
-    dispatch(getConsumedInfoForSpecificDay(formattedDate)); // Dispecerizăm acțiunea pentru a obține produsele pentru acea dată
-  };
-
-  // Funcție pentru a filtra produsele care au aceeași dată
   const filteredProducts = consumedProducts.filter((product) => {
-    // Obținem doar data (ignoram ora) din baza de date
     const productDate = new Date(product.date).toISOString().split("T")[0];
     const selectedDateStr = selectedDate.toISOString().split("T")[0];
-    return productDate === selectedDateStr; // Comparăm doar data (fără ora)
+    return productDate === selectedDateStr;
   });
 
   const handleDeleteClick = (productId, date) => {
@@ -81,7 +76,6 @@ const ProductsList = () => {
     setProductToDelete(null);
   };
 
-  // Funcție pentru a obține primele două cuvinte dintr-un nume
   const getFirstTwoWords = (name) => {
     const words = name.split(" ");
     return words.slice(0, 2).join(" ");
@@ -89,29 +83,28 @@ const ProductsList = () => {
 
   return (
     <div className={styles.container}>
-      {/* Afișează data curentă */}
       <div className={styles.dateContainer}>
         <span className={styles.currentDate}>
           {selectedDate.toLocaleDateString()}
-        </span>{" "}
-        {/* Afișează data selectată într-un format ușor de citit */}
-        {/* Iconul de calendar pentru a deschide DatePicker */}
+        </span>
         <FaCalendarAlt
           className={styles.calendarIcon}
-          onClick={() => datePickerRef.current.setOpen(true)} // Deschide DatePicker la click pe icon
+          onClick={() => datePickerRef.current.setOpen(true)}
         />
-        {/* DatePicker pentru selecția datei */}
         <DatePicker
-          ref={datePickerRef} // Atribuim ref-ul la DatePicker
+          ref={datePickerRef}
           selected={selectedDate}
-          onChange={handleDateChange}
-          maxDate={new Date()} // Nu permite selectarea unei date din viitor
+          onChange={handleChange}
+          maxDate={new Date()}
           dateFormat="yyyy-MM-dd"
           className={styles.datePicker}
         />
       </div>
 
-      <AddConsumedProductForm extraClass={styles.addContainer} />
+      <AddConsumedProductForm
+        extraClass={styles.addContainer}
+        date={selectedDate}
+      />
 
       <Modal
         isVisible={isAddModalVisible}
@@ -121,7 +114,6 @@ const ProductsList = () => {
         <AddConsumedProductForm onClose={() => setIsAddModalVisible(false)} />
       </Modal>
 
-      {/* Afișează lista de produse consumate pe data selectată */}
       <div className={styles.consumedProductsList}>
         {filteredProducts.length > 0 ? (
           <ol className={styles.list}>
@@ -160,7 +152,6 @@ const ProductsList = () => {
         handlerFunction={() => setIsAddModalVisible(true)}
       />
 
-      {/* Modal for confirming delete */}
       <Modal
         isVisible={isDeleteModalVisible}
         handleModalClose={cancelDelete}

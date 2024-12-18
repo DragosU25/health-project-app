@@ -11,7 +11,7 @@ import { HiPlus } from "react-icons/hi";
 import Button from "../common/Button/Button";
 import Notiflix from "notiflix";
 
-const AddConsumedProductForm = ({ onClose, extraClass = "" }) => {
+const AddConsumedProductForm = ({ onClose, extraClass = "", date }) => {
   const dispatch = useDispatch();
 
   // State to hold form data
@@ -72,7 +72,7 @@ const AddConsumedProductForm = ({ onClose, extraClass = "" }) => {
 
     const newConsumedProduct = {
       product: selectedProduct._id,
-      date: new Date().toISOString().split("T")[0], // Set the current date
+      date: date, // Set the current date
       quantity: weight, // Change quantity to weight
       kcal: (selectedProduct.calories / 100) * weight, // Calculate calories based on weight
       name: selectedProduct.title, // Add the title of the selected product

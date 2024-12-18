@@ -47,7 +47,7 @@ function App() {
               path="register"
               element={
                 <RestrictedRoute
-                  redirectTo="/diary"
+                  redirectTo="/login"
                   component={<LazyRegister />}
                 />
               }

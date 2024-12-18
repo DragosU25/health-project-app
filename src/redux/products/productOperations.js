@@ -105,16 +105,20 @@ export const getConsumedInfoForSpecificDay = createAsyncThunk(
   async (date, { getState, rejectWithValue }) => {
     const { auth } = getState();
     const token = auth.token;
-
     try {
       const response = await axios.get(`/private/consumed/${date}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      if (!response.data) {
+        return [];
+      }
+
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || "Server Error");
     }
   }
 );
