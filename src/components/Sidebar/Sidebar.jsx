@@ -1,26 +1,33 @@
+// Sidebar.js
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Sidebar.module.css";
 import { selectUser } from "../../redux/auth/selectorsAuth";
 import NotRecommendedList from "../NotRecommendedList/NotRecommendedList";
 import { getCurrentUser } from "../../redux/auth/authOperations";
+import { selectConsumedProducts } from "../../redux/products/productSelectors";
+import { getConsumedInfoForSpecificDay } from "../../redux/products/productOperations";
 
-const Sidebar = ({ selectedDate }) => {
+const Sidebar = () => {
   const currentUser = useSelector(selectUser);
+  const consumedProducts = useSelector(selectConsumedProducts);
+  const storageDate = localStorage.getItem("date");
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCurrentUser);
-  }, [dispatch]);
+    if (storageDate) {
+      dispatch(getConsumedInfoForSpecificDay(storageDate));
+      dispatch(getCurrentUser());
+    }
+  }, [dispatch, storageDate]);
 
-  const consumedProducts = currentUser.consumedProducts || [];
   const restrictedAliments = currentUser.restrictedAliments || [];
 
   // Filter the consumed products based on the selected date
   const filteredConsumedProducts = consumedProducts.filter((product) => {
     const productDate = new Date(product.date).toISOString().split("T")[0];
-    const selectedDateStr = selectedDate.toISOString().split("T")[0];
+    const selectedDateStr = storageDate;
     return productDate === selectedDateStr;
   });
 
@@ -40,12 +47,11 @@ const Sidebar = ({ selectedDate }) => {
 
   // Calculate remaining calories for the selected date
   const remainingCalories = recommendedCalories - consumedCalories;
+
   return (
     <div className={styles.sidebar}>
       <div className={styles.summary}>
-        <h3 className={styles.title}>
-          Summary for {selectedDate.toLocaleDateString()}
-        </h3>
+        <h3 className={styles.title}>Summary for {storageDate}</h3>
         <div className={styles.summaryContainer}>
           <p className={styles.summaryText}>
             Left: <span> {Math.round(remainingCalories)} kcal</span>
