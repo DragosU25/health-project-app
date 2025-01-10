@@ -3,10 +3,13 @@ import { useDispatch } from "react-redux";
 import { registerUser } from "../../redux/auth/authOperations";
 import styles from "./RegisterForm.module.css";
 import Button from "../../components/common/Button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Notiflix from "notiflix";
 
 const RegisterForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate;
+
   const [userData, setUserData] = useState({
     username: "",
     email: "",
@@ -18,9 +21,27 @@ const RegisterForm = () => {
     setUserData({ ...userData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(registerUser(userData));
+
+    try {
+      const action = await dispatch(registerUser(userData)).unwrap();
+
+      setUserData({
+        username: "",
+        email: "",
+        password: "",
+      });
+
+      Notiflix.Notify.success(
+        "Register successful! Please check your email for confirmation!"
+      );
+
+      return action;
+    } catch (error) {
+      Notiflix.Notify.failure(error.message || "Email address in use!");
+      console.log(error);
+    }
   };
 
   return (
@@ -76,14 +97,14 @@ const RegisterForm = () => {
             </label>
           </div>
           <div className={styles.buttons}>
-            <Button text={"Register"} extraClass={styles.transparentButton} />
+            <Button
+              text={"Register"}
+              extraClass={styles.transparentButton}
+              type={"submit"}
+            />
 
             <Link to={"/login"}>
-              <Button
-                text={"Log in"}
-                type={"submit"}
-                extraClass={styles.button}
-              />
+              <Button text={"Log in"} extraClass={styles.button} />
             </Link>
           </div>
         </form>
